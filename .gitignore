@@ -19,3 +19,6 @@
 
 # Go
 vendor/
+
+# Local Compiler Toolchain
+w64devkit-mini/
