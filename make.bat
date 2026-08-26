@@ -46,7 +46,8 @@ echo [make] Restoring database from backup.sql...
 set PGPASSWORD=postgres
 set PATH=C:\Program Files\PostgreSQL\15\bin;%PATH%
 psql -U postgres -h localhost -p 5432 -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'inventory_db' AND pid <> pg_backend_pid();"
-psql -U postgres -h localhost -p 5432 -d postgres -c "DROP DATABASE IF EXISTS inventory_db; CREATE DATABASE inventory_db;"
+psql -U postgres -h localhost -p 5432 -d postgres -c "DROP DATABASE IF EXISTS inventory_db;"
+psql -U postgres -h localhost -p 5432 -d postgres -c "CREATE DATABASE inventory_db;"
 cmd.exe /c "psql -U postgres -h localhost -p 5432 -d inventory_db < database\backup.sql"
 GOTO end
 
