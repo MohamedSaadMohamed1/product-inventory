@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	ErrUsernameTaken      = errors.New("username is already taken")
-	ErrInvalidCredentials = errors.New("invalid username or password")
+	ErrEmailTaken         = errors.New("email is already taken")
+	ErrInvalidCredentials = errors.New("invalid email or password")
 )
 
 // Service coordinates registration, login, hashing, and token operations.
@@ -37,9 +37,9 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*AuthRespo
 	}
 
 	// 1. Check if user already exists
-	_, err := s.queries.GetUserByUsername(ctx, req.Username)
+	_, err := s.queries.GetUserByEmail(ctx, req.Email)
 	if err == nil {
-		return nil, ErrUsernameTaken
+		return nil, ErrEmailTaken
 	}
 	if !errors.Is(err, pgx.ErrNoRows) {
 		return nil, fmt.Errorf("failed to check existing user: %w", err)
@@ -59,7 +59,7 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*AuthRespo
 
 	// 4. Create user
 	user, err := s.queries.CreateUser(ctx, db.CreateUserParams{
-		Username:     req.Username,
+		Email:        req.Email,
 		PasswordHash: string(hash),
 		Role:         role,
 	})
@@ -68,15 +68,15 @@ func (s *Service) Register(ctx context.Context, req RegisterRequest) (*AuthRespo
 	}
 
 	// 5. Generate JWT token (expires in 24 hours)
-	token, err := GenerateToken(user.ID, user.Username, user.Role, s.jwtSecret, 24*time.Hour)
+	token, err := GenerateToken(user.ID, user.Email, user.Role, s.jwtSecret, 24*time.Hour)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate token: %w", err)
 	}
 
 	return &AuthResponse{
-		Token:    token,
-		Username: user.Username,
-		Role:     user.Role,
+		Token: token,
+		Email: user.Email,
+		Role:  user.Role,
 	}, nil
 }
 
@@ -86,8 +86,8 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*AuthResponse, e
 		return nil, err
 	}
 
-	// 1. Fetch user by username
-	user, err := s.queries.GetUserByUsername(ctx, req.Username)
+	// 1. Fetch user by email
+	user, err := s.queries.GetUserByEmail(ctx, req.Email)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, ErrInvalidCredentials
@@ -102,14 +102,14 @@ func (s *Service) Login(ctx context.Context, req LoginRequest) (*AuthResponse, e
 	}
 
 	// 3. Generate token
-	token, err := GenerateToken(user.ID, user.Username, user.Role, s.jwtSecret, 24*time.Hour)
+	token, err := GenerateToken(user.ID, user.Email, user.Role, s.jwtSecret, 24*time.Hour)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate token: %w", err)
 	}
 
 	return &AuthResponse{
-		Token:    token,
-		Username: user.Username,
-		Role:     user.Role,
+		Token: token,
+		Email: user.Email,
+		Role:  user.Role,
 	}, nil
 }

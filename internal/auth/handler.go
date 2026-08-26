@@ -28,8 +28,8 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 
 	res, err := h.service.Register(r.Context(), req)
 	if err != nil {
-		if errors.Is(err, ErrUsernameTaken) {
-			sharedHttp.WriteError(w, http.StatusConflict, "USERNAME_TAKEN", err.Error())
+		if errors.Is(err, ErrEmailTaken) {
+			sharedHttp.WriteError(w, http.StatusConflict, "EMAIL_TAKEN", err.Error())
 			return
 		}
 		sharedHttp.WriteError(w, http.StatusBadRequest, "VALIDATION_ERROR", err.Error())

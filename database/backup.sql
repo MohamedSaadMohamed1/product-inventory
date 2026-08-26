@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict jmSR2W2c7tfZVREF6rYdAgeo6kENHrnKyfhQPRQTJrGu9LoVXKC5dsjR46LI3Sb
+\restrict p1Fa0VrtJqOnJ0QdrEO5zMPIasNmNzCteHwQY1Vq9EpsOhhgpVkPICRWYzcvDsh
 
 -- Dumped from database version 15.15
 -- Dumped by pg_dump version 15.15
@@ -143,11 +143,11 @@ ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    username character varying(255) NOT NULL,
     password_hash character varying(255) NOT NULL,
     role character varying(50) DEFAULT 'customer'::character varying NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    email character varying(255) NOT NULL
 );
 
 
@@ -223,13 +223,13 @@ COPY public.orders (id, status, total_amount, created_at, updated_at, cancelled_
 --
 
 COPY public.products (id, name, description, price, stock_quantity, created_at, updated_at) FROM stdin;
-1	iPhone 15 Pro Max	Apple iPhone 15 Pro Max 256GB Natural Titanium	119900	15	2026-08-26 02:06:56.807279-07	2026-08-26 02:06:56.807279-07
-2	Sony PlayStation 5 Pro	825GB SSD Console with Ray-Tracing GPU	69900	25	2026-08-26 02:06:56.812683-07	2026-08-26 02:06:56.812683-07
-3	MacBook Pro 16" M3	16-inch Liquid Retina XDR display, 18GB Unified Memory	249900	8	2026-08-26 02:06:56.81322-07	2026-08-26 02:06:56.81322-07
-4	AirPods Pro 2	Active Noise Cancelling Wireless Headphones	24900	50	2026-08-26 02:06:56.81378-07	2026-08-26 02:06:56.81378-07
-5	Nintendo Switch OLED	7-inch OLED screen model with Neon Blue/Red Joy-Con	34900	30	2026-08-26 02:06:56.81378-07	2026-08-26 02:06:56.81378-07
-6	Logitech MX Master 3S	Ergonomic Performance Wireless Mouse	9900	40	2026-08-26 02:06:56.814325-07	2026-08-26 02:06:56.814325-07
-7	Dell UltraSharp 27"	27-inch 4K USB-C Hub Monitor	54900	12	2026-08-26 02:06:56.814865-07	2026-08-26 02:06:56.814865-07
+1	iPhone 15 Pro Max	Apple iPhone 15 Pro Max 256GB Natural Titanium	119900	15	2026-08-26 04:55:40.99985-07	2026-08-26 04:55:40.99985-07
+2	Sony PlayStation 5 Pro	825GB SSD Console with Ray-Tracing GPU	69900	25	2026-08-26 04:55:41.004081-07	2026-08-26 04:55:41.004081-07
+3	MacBook Pro 16" M3	16-inch Liquid Retina XDR display, 18GB Unified Memory	249900	8	2026-08-26 04:55:41.004611-07	2026-08-26 04:55:41.004611-07
+4	AirPods Pro 2	Active Noise Cancelling Wireless Headphones	24900	50	2026-08-26 04:55:41.005185-07	2026-08-26 04:55:41.005185-07
+5	Nintendo Switch OLED	7-inch OLED screen model with Neon Blue/Red Joy-Con	34900	30	2026-08-26 04:55:41.005716-07	2026-08-26 04:55:41.005716-07
+6	Logitech MX Master 3S	Ergonomic Performance Wireless Mouse	9900	40	2026-08-26 04:55:41.005716-07	2026-08-26 04:55:41.005716-07
+7	Dell UltraSharp 27"	27-inch 4K USB-C Hub Monitor	54900	12	2026-08-26 04:55:41.006259-07	2026-08-26 04:55:41.006259-07
 \.
 
 
@@ -237,12 +237,12 @@ COPY public.products (id, name, description, price, stock_quantity, created_at, 
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, username, password_hash, role, created_at, updated_at) FROM stdin;
-1	admin	$2a$10$YDysuVceY.v06Tcv8oQkuO7zJyJ5GBDYYkCbaeDmz2kOyrwU4nN1G	admin	2026-08-26 02:06:56.310661-07	2026-08-26 02:06:56.310661-07
-2	customer	$2a$10$xo7HvwRIL5P9y1aWVg7XA.uvpAQvtaqSq4qLOTQqnrWhIy/2gMag2	customer	2026-08-26 02:06:56.437932-07	2026-08-26 02:06:56.437932-07
-3	mohamed	$2a$10$9nvaHIvb.2ZJ5co650NJDexetRWRU8OiBljckcaVp6kHZLMQnWRNO	admin	2026-08-26 02:06:56.56033-07	2026-08-26 02:06:56.56033-07
-4	saad	$2a$10$YbQGMgtjq0ieHh7XKmq86uRS5rJSaQ/umbgpJVE0HJ6zRvOZrEGE6	customer	2026-08-26 02:06:56.68466-07	2026-08-26 02:06:56.68466-07
-5	sarah	$2a$10$xSzji2aAOe91ooYYMg09x.RdWz05OA8TAWeWHBdXluKHI/saj6RiW	customer	2026-08-26 02:06:56.807279-07	2026-08-26 02:06:56.807279-07
+COPY public.users (id, password_hash, role, created_at, updated_at, email) FROM stdin;
+1	$2a$10$ImmIVB4.GHktoCbmYVKA9ec246/AwDmiRNTnKoUdpCyw8Fkz8JX2G	admin	2026-08-26 04:55:40.505017-07	2026-08-26 04:55:40.505017-07	admin@example.com
+2	$2a$10$71XKSQRT3Qt5vlehHge2zeKtueHJUk3blntwEYmUHpoY/odqbXp/2	customer	2026-08-26 04:55:40.632752-07	2026-08-26 04:55:40.632752-07	customer@example.com
+3	$2a$10$CPjRSwQQRHmq7cUEKCGD2eyiXncn8Sak.nmhjdvhvhxK69lGQax.O	admin	2026-08-26 04:55:40.754882-07	2026-08-26 04:55:40.754882-07	mohamed@example.com
+4	$2a$10$z2RUan/J3FxQIrzt8HPSO.2JNGSfqzIm0/.qiwlujY.BvGaLEbN7m	customer	2026-08-26 04:55:40.877004-07	2026-08-26 04:55:40.877004-07	saad@example.com
+5	$2a$10$Co2rh1mYDRU5URaYbf4XTurc7MemqLjFT0qMnme0v2BFDHlaeKGcO	customer	2026-08-26 04:55:40.99985-07	2026-08-26 04:55:40.99985-07	sarah@example.com
 \.
 
 
@@ -299,19 +299,19 @@ ALTER TABLE ONLY public.products
 
 
 --
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_username_key UNIQUE (username);
 
 
 --
@@ -363,5 +363,5 @@ ALTER TABLE ONLY public.orders
 -- PostgreSQL database dump complete
 --
 
-\unrestrict jmSR2W2c7tfZVREF6rYdAgeo6kENHrnKyfhQPRQTJrGu9LoVXKC5dsjR46LI3Sb
+\unrestrict p1Fa0VrtJqOnJ0QdrEO5zMPIasNmNzCteHwQY1Vq9EpsOhhgpVkPICRWYzcvDsh
 

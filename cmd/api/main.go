@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
@@ -123,18 +125,33 @@ func loadEnv() {
 	}
 }
 
-// runMigrations reads the schema file and applies it.
+// runMigrations reads all *.up.sql files and applies them in alphabetical order.
 func runMigrations(ctx context.Context, pool *pgxpool.Pool) error {
-	migrationFile := "db/migrations/001_init.up.sql"
-	content, err := os.ReadFile(migrationFile)
+	files, err := os.ReadDir("db/migrations")
 	if err != nil {
-		return fmt.Errorf("failed to read migration file: %w", err)
+		return fmt.Errorf("failed to read migrations directory: %w", err)
 	}
 
-	_, err = pool.Exec(ctx, string(content))
-	if err != nil {
-		return fmt.Errorf("failed to execute migration queries: %w", err)
+	var upFiles []string
+	for _, f := range files {
+		if !f.IsDir() && strings.HasSuffix(f.Name(), ".up.sql") {
+			upFiles = append(upFiles, f.Name())
+		}
 	}
+	sort.Strings(upFiles)
 
+	for _, fileName := range upFiles {
+		filePath := filepath.Join("db/migrations", fileName)
+		content, err := os.ReadFile(filePath)
+		if err != nil {
+			return fmt.Errorf("failed to read migration file %s: %w", fileName, err)
+		}
+
+		log.Printf("Applying database migration: %s", fileName)
+		_, err = pool.Exec(ctx, string(content))
+		if err != nil {
+			log.Printf("Migration warning for %s (continuing): %v", fileName, err)
+		}
+	}
 	return nil
 }

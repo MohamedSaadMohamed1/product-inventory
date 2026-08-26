@@ -399,8 +399,8 @@ const dashboardHTML = `<!DOCTYPE html>
                     
                     <div id="authLoggedOut">
                         <div class="form-group">
-                            <label for="authUsername">Username</label>
-                            <input type="text" id="authUsername" placeholder="e.g. customer or admin" required>
+                            <label for="authEmail">Email</label>
+                            <input type="email" id="authEmail" placeholder="e.g. customer@example.com or admin@example.com" required>
                         </div>
                         <div class="form-group">
                             <label for="authPassword">Password</label>
@@ -530,7 +530,7 @@ const dashboardHTML = `<!DOCTYPE html>
         // Auth states
         let token = localStorage.getItem('jwt_token') || '';
         let userRole = localStorage.getItem('user_role') || '';
-        let username = localStorage.getItem('username') || '';
+        let email = localStorage.getItem('email') || '';
 
         function checkAuthStatus() {
             const loggedOutDiv = document.getElementById('authLoggedOut');
@@ -540,7 +540,7 @@ const dashboardHTML = `<!DOCTYPE html>
             if (token) {
                 loggedOutDiv.style.display = 'none';
                 loggedInDiv.style.display = 'block';
-                document.getElementById('loggedInUser').innerText = username;
+                document.getElementById('loggedInUser').innerText = email;
                 document.getElementById('loggedInRole').innerText = 'Role: ' + userRole;
 
                 if (userRole === 'admin') {
@@ -576,21 +576,21 @@ const dashboardHTML = `<!DOCTYPE html>
 
         async function login(event) {
             event.preventDefault();
-            const userVal = document.getElementById('authUsername').value;
+            const emailVal = document.getElementById('authEmail').value;
             const passVal = document.getElementById('authPassword').value;
             const roleVal = document.getElementById('authRole').value;
 
-            if (!userVal || !passVal) {
-                logConsole('Please enter username and password', 'error');
+            if (!emailVal || !passVal) {
+                logConsole('Please enter email and password', 'error');
                 return;
             }
 
             const path = isRegisterMode ? '/api/v1/auth/register' : '/api/v1/auth/login';
             const bodyObj = isRegisterMode 
-                ? { username: userVal, password: passVal, role: roleVal } 
-                : { username: userVal, password: passVal };
+                ? { email: emailVal, password: passVal, role: roleVal } 
+                : { email: emailVal, password: passVal };
 
-            logConsole((isRegisterMode ? 'Registering...' : 'Logging in...') + ' User: ' + userVal, 'info');
+            logConsole((isRegisterMode ? 'Registering...' : 'Logging in...') + ' Email: ' + emailVal, 'info');
 
             try {
                 const response = await fetch(path, {
@@ -604,16 +604,16 @@ const dashboardHTML = `<!DOCTYPE html>
                 if (response.ok) {
                     token = data.token;
                     userRole = data.role;
-                    username = data.username;
+                    email = data.email;
 
                     localStorage.setItem('jwt_token', token);
                     localStorage.setItem('user_role', userRole);
-                    localStorage.setItem('username', username);
+                    localStorage.setItem('email', email);
 
-                    logConsole('Successfully authenticated as ' + username + ' (' + userRole + ')', 'success');
+                    logConsole('Successfully authenticated as ' + email + ' (' + userRole + ')', 'success');
                     
                     // Clear inputs
-                    document.getElementById('authUsername').value = '';
+                    document.getElementById('authEmail').value = '';
                     document.getElementById('authPassword').value = '';
                     
                     checkAuthStatus();
@@ -631,11 +631,11 @@ const dashboardHTML = `<!DOCTYPE html>
             event.preventDefault();
             token = '';
             userRole = '';
-            username = '';
+            email = '';
 
             localStorage.removeItem('jwt_token');
             localStorage.removeItem('user_role');
-            localStorage.removeItem('username');
+            localStorage.removeItem('email');
 
             logConsole('Logged out successfully', 'info');
             checkAuthStatus();

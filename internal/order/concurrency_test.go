@@ -47,13 +47,18 @@ func TestOrderService_ConcurrencyAndRollback(t *testing.T) {
 	_, err = pool.Exec(ctx, string(migrationContent2))
 	assert.NoError(t, err)
 
+	migrationContent3, err := os.ReadFile("../../db/migrations/003_email_auth.up.sql")
+	assert.NoError(t, err)
+	_, err = pool.Exec(ctx, string(migrationContent3))
+	assert.NoError(t, err)
+
 	txManager := database.NewTxManager(pool)
 	queries := db.New(pool)
 	orderService := NewService(pool, txManager)
 
 	// Seed a test user
 	user, err := queries.CreateUser(ctx, db.CreateUserParams{
-		Username:     "testconcurrency",
+		Email:        "testconcurrency@example.com",
 		PasswordHash: "somehash",
 		Role:         "customer",
 	})
@@ -184,14 +189,14 @@ func TestOrderService_ListOrders(t *testing.T) {
 
 	// Seed user
 	user1, err := queries.CreateUser(ctx, db.CreateUserParams{
-		Username:     "listuser1",
+		Email:        "listuser1@example.com",
 		PasswordHash: "hash1",
 		Role:         "customer",
 	})
 	assert.NoError(t, err)
 
 	user2, err := queries.CreateUser(ctx, db.CreateUserParams{
-		Username:     "listuser2",
+		Email:        "listuser2@example.com",
 		PasswordHash: "hash2",
 		Role:         "customer",
 	})

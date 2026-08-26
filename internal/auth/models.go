@@ -1,18 +1,24 @@
 package auth
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 // RegisterRequest defines the request payload for user registration.
 type RegisterRequest struct {
-	Username string `json:"username"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 	Role     string `json:"role"` // Optional, defaults to 'customer'
 }
 
 // Validate validates the RegisterRequest.
 func (r *RegisterRequest) Validate() error {
-	if r.Username == "" {
-		return errors.New("username is required")
+	if r.Email == "" {
+		return errors.New("email is required")
+	}
+	if !strings.Contains(r.Email, "@") || !strings.Contains(r.Email, ".") {
+		return errors.New("invalid email address format")
 	}
 	if len(r.Password) < 6 {
 		return errors.New("password must be at least 6 characters long")
@@ -22,14 +28,17 @@ func (r *RegisterRequest) Validate() error {
 
 // LoginRequest defines the request payload for user login.
 type LoginRequest struct {
-	Username string `json:"username"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
 // Validate validates the LoginRequest.
 func (r *LoginRequest) Validate() error {
-	if r.Username == "" {
-		return errors.New("username is required")
+	if r.Email == "" {
+		return errors.New("email is required")
+	}
+	if !strings.Contains(r.Email, "@") || !strings.Contains(r.Email, ".") {
+		return errors.New("invalid email address format")
 	}
 	if r.Password == "" {
 		return errors.New("password is required")
@@ -39,7 +48,7 @@ func (r *LoginRequest) Validate() error {
 
 // AuthResponse defines the payload returned on successful register/login.
 type AuthResponse struct {
-	Token    string `json:"token"`
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	Token string `json:"token"`
+	Email string `json:"email"`
+	Role  string `json:"role"`
 }

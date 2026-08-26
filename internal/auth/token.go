@@ -10,18 +10,18 @@ import (
 
 // UserClaims defines the custom claims structure inside our JWT token.
 type UserClaims struct {
-	UserID   int64  `json:"user_id"`
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	UserID int64  `json:"user_id"`
+	Email  string `json:"email"`
+	Role   string `json:"role"`
 	jwt.RegisteredClaims
 }
 
 // GenerateToken creates a signed JWT token for a given user.
-func GenerateToken(userID int64, username, role, secret string, duration time.Duration) (string, error) {
+func GenerateToken(userID int64, email, role, secret string, duration time.Duration) (string, error) {
 	claims := UserClaims{
-		UserID:   userID,
-		Username: username,
-		Role:     role,
+		UserID: userID,
+		Email:  email,
+		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(duration)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

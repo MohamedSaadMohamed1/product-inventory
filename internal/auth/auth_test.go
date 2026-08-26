@@ -10,12 +10,12 @@ import (
 func TestTokenLifecycle(t *testing.T) {
 	secret := "test-secret-key-12345"
 	userID := int64(42)
-	username := "testuser"
+	email := "testuser@example.com"
 	role := "customer"
 	duration := 1 * time.Hour
 
 	// 1. Generate Token
-	tokenStr, err := GenerateToken(userID, username, role, secret, duration)
+	tokenStr, err := GenerateToken(userID, email, role, secret, duration)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tokenStr)
 
@@ -23,7 +23,7 @@ func TestTokenLifecycle(t *testing.T) {
 	claims, err := ValidateToken(tokenStr, secret)
 	assert.NoError(t, err)
 	assert.Equal(t, userID, claims.UserID)
-	assert.Equal(t, username, claims.Username)
+	assert.Equal(t, email, claims.Email)
 	assert.Equal(t, role, claims.Role)
 
 	// 3. Validate with Wrong Secret
@@ -34,29 +34,37 @@ func TestTokenLifecycle(t *testing.T) {
 func TestRequestValidation(t *testing.T) {
 	t.Run("RegisterRequest", func(t *testing.T) {
 		// Valid request
-		req := RegisterRequest{Username: "newuser", Password: "mypassword"}
+		req := RegisterRequest{Email: "newuser@example.com", Password: "mypassword"}
 		assert.NoError(t, req.Validate())
 
-		// Missing username
-		req = RegisterRequest{Username: "", Password: "mypassword"}
+		// Missing email
+		req = RegisterRequest{Email: "", Password: "mypassword"}
+		assert.Error(t, req.Validate())
+
+		// Invalid email format
+		req = RegisterRequest{Email: "invalidemail", Password: "mypassword"}
 		assert.Error(t, req.Validate())
 
 		// Password too short
-		req = RegisterRequest{Username: "newuser", Password: "123"}
+		req = RegisterRequest{Email: "newuser@example.com", Password: "123"}
 		assert.Error(t, req.Validate())
 	})
 
 	t.Run("LoginRequest", func(t *testing.T) {
 		// Valid request
-		req := LoginRequest{Username: "user", Password: "password"}
+		req := LoginRequest{Email: "user@example.com", Password: "password"}
 		assert.NoError(t, req.Validate())
 
-		// Missing username
-		req = LoginRequest{Username: "", Password: "password"}
+		// Missing email
+		req = LoginRequest{Email: "", Password: "password"}
+		assert.Error(t, req.Validate())
+
+		// Invalid email format
+		req = LoginRequest{Email: "invalid", Password: "password"}
 		assert.Error(t, req.Validate())
 
 		// Missing password
-		req = LoginRequest{Username: "user", Password: ""}
+		req = LoginRequest{Email: "user@example.com", Password: ""}
 		assert.Error(t, req.Validate())
 	})
 }
