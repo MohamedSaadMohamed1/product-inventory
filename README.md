@@ -106,24 +106,28 @@ JWT_SECRET=super-secret-token-key-change-in-production
    CREATE DATABASE inventory_db;
    ```
 2. Restore the database schema and seed data containing pre-hashed passwords:
-   - **Windows**:
+   - **Windows (PowerShell)**:
      ```powershell
-     make db-restore
+     .\make db-restore
      ```
-     *(Uses the `make.bat` wrapper to connect, terminate sessions, and restore safely).*
-   - **Linux/macOS**:
+   - **Linux/macOS (Bash)**:
      ```bash
-     psql -U postgres -d inventory_db < database/backup.sql
+     make db-restore
      ```
    *Note: Seed users loaded:*
    - **Admin**: Email: `admin@example.com` (Password: `adminpassword`) or `mohamed@example.com` (Password: `mohamedpassword`)
    - **Customer**: Email: `customer@example.com` (Password: `customerpassword`) or `saad@example.com` (Password: `saadpassword`)
 
 ### Step 3: Run the Application
-Run the API locally using Makefile commands (available natively on Windows via `make.bat` wrapper):
-```bash
-make run
-```
+Run the API locally using our wrapper command:
+- **Windows (PowerShell)**:
+  ```powershell
+  .\make run
+  ```
+- **Linux/macOS (Bash)**:
+  ```bash
+  make run
+  ```
 The API will run on http://localhost:8080. The interactive UI dashboard is served at http://localhost:8080/.
 
 ---
@@ -131,22 +135,37 @@ The API will run on http://localhost:8080. The interactive UI dashboard is serve
 ## Running with Docker Compose
 
 If Docker is installed:
-```bash
-make docker-up
-```
+- **Windows (PowerShell)**:
+  ```powershell
+  .\make docker-up
+  ```
+- **Linux/macOS (Bash)**:
+  ```bash
+  make docker-up
+  ```
 This will spin up a PostgreSQL instance and the Go API container, running migrations automatically. To shut down:
-```bash
-make docker-down
-```
+- **Windows (PowerShell)**:
+  ```powershell
+  .\make docker-down
+  ```
+- **Linux/macOS (Bash)**:
+  ```bash
+  make docker-down
+  ```
 
 ---
 
 ## Database Backup & Restore
 
 You can back up the PostgreSQL database state easily using scripts:
-* **Windows**: Run [`scripts/db_backup.bat`](file:///c:/Users/lenovo/Downloads/product-inventory/scripts/db_backup.bat).
-* **Linux/macOS**: Run [`scripts/db_backup.sh`](file:///c:/Users/lenovo/Downloads/product-inventory/scripts/db_backup.sh).
-* **Makefile**: Run `make db-backup` or `make db-restore`.
+* **Windows**: Run [`scripts/db_backup.bat`](file:///c:/Users/lenovo/Downloads/product-inventory/scripts/db_backup.bat) or use:
+  ```powershell
+  .\make db-backup
+  ```
+* **Linux/macOS**: Run [`scripts/db_backup.sh`](file:///c:/Users/lenovo/Downloads/product-inventory/scripts/db_backup.sh) or use:
+  ```bash
+  make db-backup
+  ```
 
 ---
 
@@ -261,9 +280,24 @@ You can back up the PostgreSQL database state easily using scripts:
 The testing suite contains unit and integration tests.
 
 ### Run All Tests
-```bash
-make test
-```
+- **Windows (PowerShell)**:
+  ```powershell
+  .\make test
+  ```
+- **Linux/macOS (Bash)**:
+  ```bash
+  make test
+  ```
+
+### Run Concurrency / Race Tests
+- **Windows (PowerShell)**:
+  ```powershell
+  .\make test-race
+  ```
+- **Linux/macOS (Bash)**:
+  ```bash
+  make test-race
+  ```
 
 ### Concurrency & Race Tests
 The concurrency test inside `internal/order/concurrency_test.go` verifies correct behaviour under load:
