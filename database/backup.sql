@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict p1Fa0VrtJqOnJ0QdrEO5zMPIasNmNzCteHwQY1Vq9EpsOhhgpVkPICRWYzcvDsh
+\restrict wsMxh2DBVcLDz6L9himLBRQ9J47mySe0SaTV8W1ARnpoo2cF0DOesYY2rX04TgH
 
 -- Dumped from database version 15.15
 -- Dumped by pg_dump version 15.15
@@ -223,13 +223,13 @@ COPY public.orders (id, status, total_amount, created_at, updated_at, cancelled_
 --
 
 COPY public.products (id, name, description, price, stock_quantity, created_at, updated_at) FROM stdin;
-1	iPhone 15 Pro Max	Apple iPhone 15 Pro Max 256GB Natural Titanium	119900	15	2026-08-26 04:55:40.99985-07	2026-08-26 04:55:40.99985-07
-2	Sony PlayStation 5 Pro	825GB SSD Console with Ray-Tracing GPU	69900	25	2026-08-26 04:55:41.004081-07	2026-08-26 04:55:41.004081-07
-3	MacBook Pro 16" M3	16-inch Liquid Retina XDR display, 18GB Unified Memory	249900	8	2026-08-26 04:55:41.004611-07	2026-08-26 04:55:41.004611-07
-4	AirPods Pro 2	Active Noise Cancelling Wireless Headphones	24900	50	2026-08-26 04:55:41.005185-07	2026-08-26 04:55:41.005185-07
-5	Nintendo Switch OLED	7-inch OLED screen model with Neon Blue/Red Joy-Con	34900	30	2026-08-26 04:55:41.005716-07	2026-08-26 04:55:41.005716-07
-6	Logitech MX Master 3S	Ergonomic Performance Wireless Mouse	9900	40	2026-08-26 04:55:41.005716-07	2026-08-26 04:55:41.005716-07
-7	Dell UltraSharp 27"	27-inch 4K USB-C Hub Monitor	54900	12	2026-08-26 04:55:41.006259-07	2026-08-26 04:55:41.006259-07
+1	iPhone 15 Pro Max	Apple iPhone 15 Pro Max 256GB Natural Titanium	119900	15	2026-08-26 05:11:48.949043-07	2026-08-26 05:11:48.949043-07
+2	Sony PlayStation 5 Pro	825GB SSD Console with Ray-Tracing GPU	69900	25	2026-08-26 05:11:48.952975-07	2026-08-26 05:11:48.952975-07
+3	MacBook Pro 16" M3	16-inch Liquid Retina XDR display, 18GB Unified Memory	249900	8	2026-08-26 05:11:48.95304-07	2026-08-26 05:11:48.95304-07
+4	AirPods Pro 2	Active Noise Cancelling Wireless Headphones	24900	50	2026-08-26 05:11:48.953597-07	2026-08-26 05:11:48.953597-07
+5	Nintendo Switch OLED	7-inch OLED screen model with Neon Blue/Red Joy-Con	34900	30	2026-08-26 05:11:48.953597-07	2026-08-26 05:11:48.953597-07
+6	Logitech MX Master 3S	Ergonomic Performance Wireless Mouse	9900	40	2026-08-26 05:11:48.954116-07	2026-08-26 05:11:48.954116-07
+7	Dell UltraSharp 27"	27-inch 4K USB-C Hub Monitor	54900	12	2026-08-26 05:11:48.954116-07	2026-08-26 05:11:48.954116-07
 \.
 
 
@@ -238,11 +238,11 @@ COPY public.products (id, name, description, price, stock_quantity, created_at, 
 --
 
 COPY public.users (id, password_hash, role, created_at, updated_at, email) FROM stdin;
-1	$2a$10$ImmIVB4.GHktoCbmYVKA9ec246/AwDmiRNTnKoUdpCyw8Fkz8JX2G	admin	2026-08-26 04:55:40.505017-07	2026-08-26 04:55:40.505017-07	admin@example.com
-2	$2a$10$71XKSQRT3Qt5vlehHge2zeKtueHJUk3blntwEYmUHpoY/odqbXp/2	customer	2026-08-26 04:55:40.632752-07	2026-08-26 04:55:40.632752-07	customer@example.com
-3	$2a$10$CPjRSwQQRHmq7cUEKCGD2eyiXncn8Sak.nmhjdvhvhxK69lGQax.O	admin	2026-08-26 04:55:40.754882-07	2026-08-26 04:55:40.754882-07	mohamed@example.com
-4	$2a$10$z2RUan/J3FxQIrzt8HPSO.2JNGSfqzIm0/.qiwlujY.BvGaLEbN7m	customer	2026-08-26 04:55:40.877004-07	2026-08-26 04:55:40.877004-07	saad@example.com
-5	$2a$10$Co2rh1mYDRU5URaYbf4XTurc7MemqLjFT0qMnme0v2BFDHlaeKGcO	customer	2026-08-26 04:55:40.99985-07	2026-08-26 04:55:40.99985-07	sarah@example.com
+1	$2a$10$7xE9n4BSLQq7rNom897j7uvfHHdBRlx8axCK16IEPkakuyd.14jxS	admin	2026-08-26 05:11:48.707669-07	2026-08-26 05:11:48.707669-07	admin@example.com
+2	$2a$10$DCpWdigExb7k/fW.Jtg3wuqBuCuML73arVcAJZEddQ2VSMioVwZNq	customer	2026-08-26 05:11:48.770469-07	2026-08-26 05:11:48.770469-07	customer@example.com
+3	$2a$10$zcQ8GFYt/3XTkeWXgCV8feKiEx6md1NGnkVXQ51j7en7aLtObgn0K	admin	2026-08-26 05:11:48.828743-07	2026-08-26 05:11:48.828743-07	mohamed@example.com
+4	$2a$10$rX5xN85GhF53YrKRAF9GFufe/0.Bt1q16E0c/eWXRGiq1yXbvofky	customer	2026-08-26 05:11:48.889938-07	2026-08-26 05:11:48.889938-07	saad@example.com
+5	$2a$10$k.sPBjyT2U59Rsjq4KJS5OpbpNQ2C5JUBGnSVHlihdlYxZo3UO/om	customer	2026-08-26 05:11:48.948043-07	2026-08-26 05:11:48.948043-07	sarah@example.com
 \.
 
 
@@ -363,5 +363,5 @@ ALTER TABLE ONLY public.orders
 -- PostgreSQL database dump complete
 --
 
-\unrestrict p1Fa0VrtJqOnJ0QdrEO5zMPIasNmNzCteHwQY1Vq9EpsOhhgpVkPICRWYzcvDsh
+\unrestrict wsMxh2DBVcLDz6L9himLBRQ9J47mySe0SaTV8W1ARnpoo2cF0DOesYY2rX04TgH
 
