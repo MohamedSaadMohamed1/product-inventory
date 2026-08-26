@@ -105,16 +105,22 @@ JWT_SECRET=super-secret-token-key-change-in-production
    ```sql
    CREATE DATABASE inventory_db;
    ```
-2. Restore the backup (which creates the schema, tables, triggers, and default seed data containing hashed passwords for testing):
-   ```bash
-   psql -U postgres -d inventory_db < database/backup.sql
-   ```
+2. Restore the database schema and seed data containing pre-hashed passwords:
+   - **Windows**:
+     ```powershell
+     make db-restore
+     ```
+     *(Uses the `make.bat` wrapper to connect, terminate sessions, and restore safely).*
+   - **Linux/macOS**:
+     ```bash
+     psql -U postgres -d inventory_db < database/backup.sql
+     ```
    *Note: Seed users loaded:*
-   - **Admin**: Username: `admin`, Password: `adminpassword`
-   - **Customer**: Username: `customer`, Password: `customerpassword`
+   - **Admin**: Email: `admin@example.com` (Password: `adminpassword`) or `mohamed@example.com` (Password: `mohamedpassword`)
+   - **Customer**: Email: `customer@example.com` (Password: `customerpassword`) or `saad@example.com` (Password: `saadpassword`)
 
 ### Step 3: Run the Application
-Run the API locally:
+Run the API locally using Makefile commands (available natively on Windows via `make.bat` wrapper):
 ```bash
 make run
 ```
@@ -153,7 +159,7 @@ You can back up the PostgreSQL database state easily using scripts:
 - **Request Body**:
 ```json
 {
-  "username": "newuser",
+  "email": "newuser@example.com",
   "password": "mypassword",
   "role": "customer"
 }
@@ -164,7 +170,7 @@ You can back up the PostgreSQL database state easily using scripts:
 - **Request Body**:
 ```json
 {
-  "username": "customer",
+  "email": "customer@example.com",
   "password": "customerpassword"
 }
 ```
@@ -172,7 +178,7 @@ You can back up the PostgreSQL database state easily using scripts:
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "username": "customer",
+  "email": "customer@example.com",
   "role": "customer"
 }
 ```
