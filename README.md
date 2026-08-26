@@ -51,6 +51,40 @@ We use a **Clean-ish Architecture** consisting of decoupled layers:
 
 ---
 
+## Prerequisites & Installation
+
+To run this application locally, you must install the following prerequisites on your host machine:
+
+### 1. Go (Golang) Compiler
+* **Required Version**: Go 1.23 or newer (Go 1.26 recommended).
+* **Download**: [Official Go Downloads](https://go.dev/dl/).
+* **Verification**: Verify Go is installed and in your PATH by running:
+  ```bash
+  go version
+  ```
+
+### 2. PostgreSQL Database Server
+* **Required Version**: PostgreSQL 14 or newer.
+* **Download**: [Official PostgreSQL Downloads](https://www.postgresql.org/download/).
+* **Installation Tip (Windows)**: During the installation wizard, set the default password for the `postgres` user (e.g., `postgres`) and use the default port `5432`. Make sure the database service is started.
+* **PATH Setup (Windows)**: To run commands like `psql` or `pg_dump` from your terminal, add the PostgreSQL binary folder to your system environment variables PATH (default location: `C:\Program Files\PostgreSQL\<version>\bin`).
+
+### 3. Git (Version Control)
+* **Download**: [Official Git Downloads](https://git-scm.com/downloads).
+* **Verification**: Verify Git is installed by running:
+  ```bash
+  git version
+  ```
+
+### 4. Make Utility (Optional)
+* **Windows**: You can install GNU Make via winget if you wish to use Makefile shortcuts:
+  ```powershell
+  winget install GnuWin32.Make
+  ```
+  *(Otherwise, you can run Go commands directly as described in the steps below).*
+
+---
+
 ## Configuration
 
 ### Step 1: Environment Variables
